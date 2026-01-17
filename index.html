@@ -8,165 +8,111 @@
         :root {
             --stoic-red: #8b1a1a;
             --bg-cream: #fdfaf6;
-            --text-main: #333;
             --border-tan: #e0d7c6;
+            --text-main: #333;
         }
 
         body {
             margin: 0; padding: 0;
+            font-family: 'Constantia', 'Georgia', serif;
             background-color: var(--bg-cream);
             color: var(--text-main);
-            font-family: 'Constantia', 'Georgia', serif;
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 20px;
+            display: flex; flex-direction: column;
+            align-items: center; min-height: 100vh;
         }
 
         header {
+            width: 100%; text-align: center; padding: 50px 0;
+            background: white; border-bottom: 4px solid var(--stoic-red);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        h1 { margin: 0; font-variant: small-caps; font-size: 2.5em; color: var(--stoic-red); }
+        .subtitle { font-style: italic; color: #666; margin-top: 10px; }
+
+        .library-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px; width: 90%; max-width: 1100px;
+            margin: 50px 0;
+        }
+
+        .book-card {
+            background: white; border: 1px solid var(--border-tan);
+            padding: 30px; border-radius: 8px; text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none; color: inherit;
+            display: flex; flex-direction: column; justify-content: space-between;
+        }
+
+        .book-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(139, 26, 26, 0.1);
+            border-color: var(--stoic-red);
+        }
+
+        .book-card h2 { color: var(--stoic-red); margin-top: 0; font-size: 1.5em; }
+        .book-card p { font-size: 0.95em; line-height: 1.6; color: #555; }
+        
+        .author { font-weight: bold; font-variant: small-caps; margin-bottom: 15px; display: block; }
+        
+        .btn {
+            margin-top: 20px; padding: 10px 20px;
+            background: var(--stoic-red); color: white;
+            border-radius: 4px; text-transform: uppercase;
+            font-size: 0.85em; letter-spacing: 1px;
+        }
+
+        footer { 
+            width: 100%;
+            margin-top: auto; 
+            padding: 40px 0; 
+            background-color: white;
+            border-top: 1px solid var(--border-tan);
             text-align: center;
-            border-bottom: 3px solid var(--stoic-red);
-            padding-bottom: 20px;
-            margin-bottom: 40px;
-        }
-
-        header h1 {
-            font-size: 2.5rem;
-            margin: 0;
-            color: var(--stoic-red);
-            letter-spacing: 1px;
-        }
-
-        header p {
-            font-style: italic;
-            font-size: 1.1rem;
             color: #666;
         }
 
-        .intro-section {
-            background: white;
-            padding: 30px;
-            border: 1px solid var(--border-tan);
-            border-radius: 4px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            margin-bottom: 40px;
-        }
-
-        .library-links {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin: 40px 0;
-        }
-
-        .card {
-            background: white;
-            border: 2px solid var(--stoic-red);
-            padding: 30px;
-            text-align: center;
-            border-radius: 8px;
-            text-decoration: none;
-            color: var(--text-main);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(139, 26, 26, 0.15);
-        }
-
-        .card h2 {
-            margin-top: 0;
-            color: var(--stoic-red);
-        }
-
-        .guide-section {
-            background: #fff;
-            padding: 30px;
-            border-left: 5px solid var(--stoic-red);
-            margin-bottom: 40px;
-        }
-
-        .guide-section h3 {
-            margin-top: 0;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            letter-spacing: 2px;
-        }
-
-        ul {
-            padding-left: 20px;
-        }
-
-        li {
-            margin-bottom: 10px;
-        }
-
-        footer {
-            text-align: center;
-            font-size: 0.85rem;
-            color: #555;
-            margin-top: 60px;
-            border-top: 1px solid var(--border-tan);
-            padding: 30px 10px;
-            background-color: #fff;
-        }
-
-        footer p {
-            margin: 5px 0;
-        }
-
-        .citation-block {
-            margin-top: 15px;
-            font-size: 0.8rem;
-            color: #777;
-            font-style: italic;
-        }
-
-        @media (max-width: 600px) {
-            .library-links { grid-template-columns: 1fr; }
-        }
+        .footer-content { width: 80%; max-width: 800px; margin: 0 auto; line-height: 1.6; }
+        .footer-note { font-size: 0.85em; margin-bottom: 10px; }
+        .copyright { font-size: 0.75em; color: #999; margin-top: 15px; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <header>
-        <h1>The Digital Stoic Library</h1>
-        <p>A textual resource for Stoic studies</p>
-    </header>
+<header>
+    <h1>The Digital Stoic Library</h1>
+    <div class="subtitle">Interactive Greek-English texts with Stoic annotation and indexing</div>
+</header>
 
-    <div class="intro-section">
-        <p>
-            Welcome to a specialized digital resource for the study of Stoicism. This project provides technically rigorous, lemma-tagged editions of <strong>Epictetus’s Enchiridion</strong> and <strong>Marcus Aurelius’s Meditations</strong>.
-        </p>
-        <p>
-            Unlike standard translations, this library is built upon a <strong>Master Stoic Lexicon</strong> of key technical terms. Using advanced computational linguistics, we have mapped every occurrence of these terms in the original Ancient Greek back to their English counterparts, allowing students and scholars to see the "Logos" behind the translation.
-        </p>
-    </div>
+<div class="library-container">
+    <a href="Enchiridion_Reader.html" class="book-card">
+        <div>
+            <span class="author">Epictetus</span>
+            <h2>Enchiridion</h2>
+            <p>The "Handbook" of Stoic practice. Concise instructions on the practice of Stoic Philosophy.</p>
+        </div>
+        <div class="btn">Enter Library</div>
+    </a>
 
-    <div class="library-links">
-        <a href="Enchiridion_Reader.html" class="card">
-            <h2>The Enchiridion</h2>
-            <p>Instructional and imperative. Epictetus' handbook of Stoic practice as recorded by Arrian.</p>
-        </a>
-        <a href="Meditations_Reader.html" class="card">
-            <h2>The Meditations</h2>
-            <p>Personal and cosmic. The private reflections of the great Stoic Emperor, Marcus Aurelius.</p>
-        </a>
-    </div>
+    <a href="Meditations_Reader.html" class="book-card">
+        <div>
+            <span class="author">Marcus Aurelius</span>
+            <h2>Meditations</h2>
+            <p>Private journals of the Roman Emperor. Spiritual exercises focused on a cosmic perspective.</p>
+        </div>
+        <div class="btn">Enter Library</div>
+    </a>
 
-    <div class="guide-section">
-        <h3>User Guide & Navigation</h3>
-        <ul>
-            <li><strong>Thematic Filter:</strong> Use the dropdown menu at the top to filter the text by technical concepts. The chapter list will automatically update to show only relevant passages.</li>
-            <li><strong>Interactive Tagging:</strong> Click the Lexical Tags at the bottom of the Greek pane to "pin" a concept. The reader will instantly highlight all inflected forms of that Greek word in the original text.</li>
-            <li><strong>Scholarly Notes:</strong> The bottom pane provides thematic commentary focused on the technical application of the Stoic lexicon within each specific passage.</li>
-        </ul>
-    </div>
+    <a href="Discourses_Reader.html" class="book-card">
+        <div>
+            <span class="author">Epictetus</span>
+            <h2>Discourses</h2>
+            <p>Formal classroom lectures recorded by Arrian. Detailed philosophical defenses and practical guidance on Stoicism.</p>
+        </div>
+        <div class="btn">Enter Library</div>
+    </a>
+</div>
 
     <footer>
         <p><strong>Developed & Curated by Walter N. Moss</strong></p>
@@ -178,7 +124,6 @@
             <p>Moss, W. (2026). Data Paper: The Digital Stoic Library. <em>Knowledge Commons</em>. https://doi.org/10.5281/zenodo.18273320</p>
         </div>
     </footer>
-</div>
 
 </body>
 </html>
