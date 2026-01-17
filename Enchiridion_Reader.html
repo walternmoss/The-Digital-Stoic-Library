@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <title>The Enchiridion - Online Reader</title>
+    <style>
+        :root {
+            --stoic-red: #8b1a1a;
+            --bg-cream: #fdfaf6;
+            --border-tan: #e0d7c6;
+            --text-main: #333;
+            --accent-amber: #f2c94c;
+            --highlight-bg: rgba(242, 201, 76, 0.6);
+        }
+
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Constantia', 'Lucida Bright', 'Georgia', serif;
+            background-color: var(--bg-cream);
+            color: var(--text-main);
+            display: flex; flex-direction: column;
+            height: 100vh;
+        }
+
+        header {
+            text-align: center; padding: 20px 10px;
+            background-color: white; border-bottom: 3px solid var(--stoic-red);
+        }
+
+        .controls {
+            text-align: center; padding: 12px;
+            background: #fff; border-bottom: 1px solid var(--border-tan);
+            display: flex; justify-content: center; gap: 20px; align-items: center;
+        }
+
+        select { 
+            padding: 6px 12px; font-family: serif; border: 1px solid var(--border-tan);
+            border-radius: 4px; background: #fff; cursor: pointer;
+        }
+
+        main {
+            display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 2fr 1fr;
+            gap: 15px; padding: 20px; flex: 1; overflow: hidden;
+        }
+
+        .pane {
+            background: #fff; border: 1px solid var(--border-tan);
+            padding: 25px; border-radius: 4px; overflow-y: auto;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            display: flex; flex-direction: column;
+        }
+
+        .pane h2 { 
+            margin-top: 0; font-size: 0.8rem; text-transform: uppercase; 
+            letter-spacing: 1.5px; color: var(--stoic-red); border-bottom: 1px solid #eee;
+            padding-bottom: 8px; margin-bottom: 15px;
+        }
+
+        #greekText { font-family: 'Gentium Plus', 'Palatino Linotype', serif; font-size: 1.35rem; line-height: 1.7; flex-grow: 1; }
+        #englishText { font-size: 1.15rem; line-height: 1.6; color: #222; }
+        
+        .definition-display {
+            background: #fffcf5;
+            border: 1px solid var(--border-tan);
+            border-left: 5px solid var(--stoic-red);
+            padding: 12px 18px;
+            margin-top: 15px;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            display: none;
+            line-height: 1.5;
+        }
+        .definition-display .lemma-header {
+            font-family: 'Gentium Plus', serif;
+            font-size: 1.1rem;
+            color: var(--stoic-red);
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .grc-word-highlight { transition: background-color 0.2s; border-radius: 2px; font-weight: bold; }
+
+        .lexicon-tags { 
+            display: flex; flex-wrap: wrap; gap: 8px; 
+            margin-top: 20px; padding-top: 15px; border-top: 1px dashed var(--border-tan);
+        }
+        
+        .lex-tag {
+            font-size: 0.85rem; background: #f9f9f9; border: 1px solid var(--border-tan);
+            padding: 4px 10px; border-radius: 4px; cursor: pointer; transition: all 0.2s;
+        }
+        .lex-tag:hover { border-color: var(--stoic-red); color: var(--stoic-red); }
+
+        .notes-pane { grid-column: span 2; }
+        #notesContent { font-size: 1rem; line-height: 1.5; font-style: italic; color: #555; }
+
+        @media (max-width: 900px) {
+            main { grid-template-columns: 1fr; grid-template-rows: auto auto auto; overflow-y: auto; }
+            .notes-pane { grid-column: span 1; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>The Enchiridion</h1>
+    <p>Epictetus — Online Reader</p>
+</header>
+
+<div class="controls">
+    <div>
+        <label>Stoic Concept: </label>
+        <select id="conceptSelect">
+            <option value="all">All Concepts</option>
+        </select>
+    </div>
+    <div>
+        <label>Section: </label>
+        <select id="chapterSelect"></select>
+    </div>
+</div>
+
+<main>
+    <div class="pane">
+        <h2>Ancient Greek</h2>
+        <div id="greekText"></div>
+        <div id="defDisplay" class="definition-display"></div>
+        <div class="lexicon-tags" id="lexiconTags"></div>
+    </div>
+    
+    <div class="pane">
+        <h2>English Translation</h2>
+        <div id="englishText"></div>
+    </div>
+
+    <div class="pane notes-pane">
+        <h2>Stoic Commentary</h2>
+        <div id="notesContent"></div>
+    </div>
+</main>
+
+<script>
+    let enchiridionData = [];
+    let activeTagIdx = null;
+
+    const stemMap = {
+        "προαίρεσις": "προαιρε", "φαντασία": "φαντασ", "συγκατάθεσις": "συγκαταθε", "κατάληψις": "καταλη",
+        "λόγος": "λογ", "φύσις": "φυσ", "ἐφʼ ἡμῖν": "ημας", "ἀπάθεια": "απαθ", "ἀρετή": "αρετ",
+        "εὐδαιμονία": "ευδαιμον", "ἀταραξία": "αταραξ", "ὁρμή": "ορμη", "ὄρεξις": "ορεξ", "ἔκπυρωσις": "εκπυρω", "ἡγεμονικός": "ηγεμον", "καθῆκον": "καθηκ", "κατόρθωμα": "κατορθ", "συμπάθεια": "συμπαθ", "εἱμαρμένη": "ειμαρ", "πρόνοια": "προνοι", "προσοχή": "προσοχ", "ἀδιάφορος": "αδιαφορ", "προηγμένα": "προηγ", "ἀποπροηγμένα": "αποπροηγ", "ὑπόληψις": "υπολη", "δόγμα": "δογμα", "κόσμος": "κοσμ", "ὅλος": "ολο", "θεός": "θε", "ψυχή": "ψυχ", "πνεῦμα": "πνευμ", "τόνος": "τον", "ὕλη": "υλη", "αἰτία": "αιτι", "ταραχή": "ταραχ", "αἰδήμων": "αιδημ", "μεγαλοψυχία": "μεγαλοψυχ", "οἰκείωσις": "οικει", "προκόπτων": "προκοπ", "σοφός": "σοφ", "ἔννοια": "εννοι", "ἄνθρωπος": "ανθρωπ", "κακός": "κακ", "καλός": "καλ", "ἔκκλισις": "εκκλισ"
+    };
+
+    function normalize(str) {
+        return str.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[\u0345]/g, '').replace(/[ʼ'’]/g, '');
+    }
+
+    async function init() {
+        try {
+            const response = await fetch('enchiridion_final_clean.json');
+            enchiridionData = await response.json();
+            setupSelectors();
+            render(enchiridionData[0].chapter);
+        } catch (err) { console.error(err); }
+    }
+
+    function render(chapterId) {
+        const entry = enchiridionData.find(ch => String(ch.chapter) === String(chapterId));
+        if (!entry) return;
+        activeTagIdx = null;
+        document.getElementById('defDisplay').style.display = 'none';
+
+        document.getElementById('greekText').textContent = entry.greek;
+        document.getElementById('englishText').textContent = entry.english;
+        document.getElementById('notesContent').textContent = entry.notes;
+
+        const tagsContainer = document.getElementById('lexiconTags');
+        tagsContainer.innerHTML = '';
+        
+        (entry.thematic_lexicon || []).forEach((item, index) => {
+            const span = document.createElement('span');
+            span.className = 'lex-tag';
+            span.textContent = item.term;
+            
+            span.onclick = () => {
+                const defBar = document.getElementById('defDisplay');
+                if (activeTagIdx === index) {
+                    activeTagIdx = null;
+                    document.getElementById('greekText').textContent = entry.greek;
+                    span.style.background = '#f9f9f9';
+                    defBar.style.display = 'none';
+                } else {
+                    activeTagIdx = index;
+                    highlight(entry.greek, item.term);
+                    
+                    defBar.innerHTML = `<span class="lemma-header">${item.term}</span><strong>${item.translation}:</strong> ${item.lexicon_entry}`;
+                    defBar.style.display = 'block';
+
+                    document.querySelectorAll('.lex-tag').forEach(t => t.style.background = '#f9f9f9');
+                    span.style.background = 'var(--accent-amber)';
+                }
+            };
+            tagsContainer.appendChild(span);
+        });
+    }
+
+    function highlight(raw, term) {
+        if(term.includes("ἐφʼ ἡμῖν") || term.includes("eph’ hēmin")) {
+            const re = /ἐφ[ʼ'’]\s*ἡμῖν/gi;
+            document.getElementById('greekText').innerHTML = raw.replace(re, `<span class="grc-word-highlight" style="background:var(--highlight-bg)">$&</span>`);
+            return;
+        }
+        
+        const lemma = term.split(' ')[0];
+        const r = stemMap[lemma] || normalize(lemma.slice(0, -2));
+        const nr = normalize(r);
+        
+        // This regex ensures we match tokens properly without promiscuous middle-word matching
+        const words = raw.split(/(\s+|\p{P}+)/u);
+        const processed = words.map(w => {
+            const nw = normalize(w);
+            // Strict check: the word must START with the stem or BE the stem
+            if (nw.startsWith(nr) && nr.length > 1) {
+                return `<span class="grc-word-highlight" style="background:var(--highlight-bg)">${w}</span>`;
+            }
+            return w;
+        });
+        document.getElementById('greekText').innerHTML = processed.join('');
+    }
+
+    function setupSelectors() {
+        const selector = document.getElementById('chapterSelect');
+        const conceptSelector = document.getElementById('conceptSelect');
+        const uniqueTerms = new Set();
+        selector.innerHTML = '';
+        enchiridionData.forEach(ch => {
+            const opt = document.createElement('option');
+            opt.value = ch.chapter; opt.textContent = `Chapter ${ch.chapter}`;
+            selector.appendChild(opt);
+            (ch.thematic_lexicon || []).forEach(item => uniqueTerms.add(item.term));
+        });
+
+        Array.from(uniqueTerms).sort((a,b) => normalize(a).localeCompare(normalize(b))).forEach(term => {
+            const opt = document.createElement('option');
+            opt.value = term; opt.textContent = term;
+            conceptSelector.appendChild(opt);
+        });
+    }
+
+    document.getElementById('conceptSelect').onchange = (e) => {
+        const term = e.target.value;
+        const selector = document.getElementById('chapterSelect');
+        selector.innerHTML = '';
+        const filtered = term === 'all' ? enchiridionData : enchiridionData.filter(ch => (ch.thematic_lexicon || []).some(l => l.term === term));
+        filtered.forEach(ch => {
+            const opt = document.createElement('option');
+            opt.value = ch.chapter; opt.textContent = `Chapter ${ch.chapter}`;
+            selector.appendChild(opt);
+        });
+        if (filtered.length > 0) render(filtered[0].chapter);
+    };
+
+    document.getElementById('chapterSelect').onchange = (e) => render(e.target.value);
+    init();
+</script>
+</body>
+</html>
