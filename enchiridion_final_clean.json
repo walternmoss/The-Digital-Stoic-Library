@@ -38,12 +38,12 @@
       {
         "term": "ὄρεξις (orexis)",
         "translation": "Desire",
-        "lexicon_entry": "Reaching for what is perceived as good; to be directed only toward virtue."
+        "lexicon_entry": "Reaching for what is perceived as good."
       },
       {
         "term": "ἔκκλισις (ekklisis)",
         "translation": "Aversion",
-        "lexicon_entry": "The impulse to avoid; to be directed only toward one's own vice."
+        "lexicon_entry": "The impulse to avoid."
       },
       {
         "term": "ὑπόληψις (hypolepsis)",
@@ -81,17 +81,17 @@
       {
         "term": "ὄρεξις (orexis)",
         "translation": "Desire",
-        "lexicon_entry": "Reaching for what is perceived as good; to be directed only toward virtue."
+        "lexicon_entry": "Reaching for what is perceived as good."
       },
       {
         "term": "ἔκκλισις (ekklisis)",
         "translation": "Aversion",
-        "lexicon_entry": "The impulse to avoid; to be directed only toward one's own vice."
+        "lexicon_entry": "The impulse to avoid."
       },
       {
         "term": "καλός (kalos)",
         "translation": "Noble/Good",
-        "lexicon_entry": "The morally beautiful; only virtue is kalos."
+        "lexicon_entry": "The morally beautiful; only virtue is truly good."
       }
     ]
   },
@@ -110,8 +110,8 @@
     "thematic_lexicon": [
       {
         "term": "προαίρεσις (prohairesis)",
-        "translation": "Moral Will",
-        "lexicon_entry": "The faculty of reasoned choice and assent. The only thing truly 'good'."
+        "translation": "Reasoned Choice",
+        "lexicon_entry": "The faculty of reasoned choice and assent."
       },
       {
         "term": "φύσις (physis)",
@@ -152,7 +152,7 @@
       {
         "term": "καλός (kalos)",
         "translation": "Noble/Good",
-        "lexicon_entry": "The morally beautiful; only virtue is kalos."
+        "lexicon_entry": "The morally beautiful; only virtue is truly good."
       }
     ]
   },
@@ -178,8 +178,8 @@
     "thematic_lexicon": [
       {
         "term": "προαίρεσις (prohairesis)",
-        "translation": "Moral Will",
-        "lexicon_entry": "The faculty of reasoned choice and assent. The only thing truly 'good'."
+        "translation": "Reasoned Choice",
+        "lexicon_entry": "The faculty of reasoned choice and assent."
       }
     ]
   },
@@ -197,7 +197,7 @@
       {
         "term": "καλός (kalos)",
         "translation": "Noble/Good",
-        "lexicon_entry": "The morally beautiful; only virtue is kalos."
+        "lexicon_entry": "The morally beautiful; only virtue is truly good."
       }
     ]
   },
@@ -235,8 +235,8 @@
     "thematic_lexicon": [
       {
         "term": "προαίρεσις (prohairesis)",
-        "translation": "Moral Will",
-        "lexicon_entry": "The faculty of reasoned choice and assent. The only thing truly 'good'."
+        "translation": "Reasoned Choice",
+        "lexicon_entry": "The faculty of reasoned choice and assent."
       },
       {
         "term": "φύσις (physis)",
@@ -261,7 +261,7 @@
       {
         "term": "ὄρεξις (orexis)",
         "translation": "Desire",
-        "lexicon_entry": "Reaching for what is perceived as good; to be directed only toward virtue."
+        "lexicon_entry": "Reaching for what is perceived as good."
       },
       {
         "term": "θεός (theos)",
@@ -302,7 +302,7 @@
       {
         "term": "καλός (kalos)",
         "translation": "Noble/Good",
-        "lexicon_entry": "The morally beautiful; only virtue is kalos."
+        "lexicon_entry": "The morally beautiful; only virtue is truly good."
       }
     ]
   },
@@ -482,11 +482,6 @@
         "lexicon_entry": "Peace of mind resulting from focused practice."
       },
       {
-        "term": "ἡγεμονικόν (hegemonikon)",
-        "translation": "Ruling Faculty",
-        "lexicon_entry": "The commanding part of the soul responsible for judgment."
-      },
-      {
         "term": "ὅλος (holos)",
         "translation": "The Whole",
         "lexicon_entry": "The totality of existence; the interest of the whole vs. the part."
@@ -573,7 +568,7 @@
       {
         "term": "ὄρεξις (orexis)",
         "translation": "Desire",
-        "lexicon_entry": "Reaching for what is perceived as good; to be directed only toward virtue."
+        "lexicon_entry": "Reaching for what is perceived as good."
       },
       {
         "term": "ἀδιάφορος (adiaphoros)",
@@ -659,13 +654,7 @@
     "greek": "ἐν τῷ περιπατεῖν καθάπερ προσέχεις, μὴ ἐπιβῇς ἥλῳ ἢ στρέψῃς τὸν πόδα σου, οὕτω πρόσεχε, μὴ\n     καὶ τὸ ἡγεμονικὸν βλάψῃς τὸ σεαυτοῦ. καὶ τοῦτο ἐὰν ἐφʼ ἑκάστου ἔργου παραφυλάσσωμεν,\n     ἀσφαλέστερον ἁψόμεθα τοῦ ἔργου.",
     "english": "When walking, just as you take care not to step on a nail or twist your foot, so too take care that you do not harm your ruling faculty. If we observe this rule in every action, we shall set about our work more safely.",
     "notes": "Epictetus employs an analogy between physical prudence and spiritual vigilance. Just as physical injuries (like a sprained ankle) hinder movement, damage to the 'hegemonikon'—the ruling faculty or commanding center of the mind—hinders the ability to live virtually and rationally. The core Stoic practice highlighted here is 'prosoche' (attention or mindfulness): the constant vigilance required to protect one's moral character and judgment from corruption during daily activities.",
-    "thematic_lexicon": [
-      {
-        "term": "ἡγεμονικόν (hegemonikon)",
-        "translation": "Ruling Faculty",
-        "lexicon_entry": "The commanding part of the soul responsible for judgment."
-      }
-    ]
+    "thematic_lexicon": []
   },
   {
     "chapter": 39,
@@ -793,7 +782,7 @@
       {
         "term": "ὄρεξις (orexis)",
         "translation": "Desire",
-        "lexicon_entry": "Reaching for what is perceived as good; to be directed only toward virtue."
+        "lexicon_entry": "Reaching for what is perceived as good."
       }
     ]
   },
